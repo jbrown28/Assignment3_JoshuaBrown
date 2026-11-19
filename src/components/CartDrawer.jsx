@@ -11,9 +11,15 @@ function CartDrawer({
   onCheckout
 }) {
   const subtotal = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
+  (total, item) =>
+    total + Math.round(item.price * 100) * item.quantity,
+  0
+) / 100
+
+  const cartItemCount = cart.reduce(
+    (total, item) => total + item.quantity,
     0
-  )
+)
 
   if (!isOpen) {
     return null
@@ -21,13 +27,15 @@ function CartDrawer({
 
   return (
     <div className="cart-overlay" onClick={onClose}>
-      <aside
-        className="cart-drawer"
-        onClick={(event) => event.stopPropagation()}
-        aria-label="Shopping cart"
-      >
+        <aside
+            className="cart-drawer"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cart-title"
+        >
         <div className="cart-header">
-          <h2>Your Cart ({cart.length})</h2>
+          <h2 id="cart-title">Your Cart ({cartItemCount})</h2>
 
           <button
             type="button"

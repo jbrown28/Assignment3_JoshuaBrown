@@ -16,12 +16,29 @@ function CheckoutPage({ cart, onCompleteOrder }) {
   const [orderConfirmed, setOrderConfirmed] = useState(false)
 
   const handleChange = (event) => {
-    const { name, value } = event.target
-    setFormData((previousData) => ({
-      ...previousData,
-      [name]: value
-    }))
-  }
+  const { name, value } = event.target
+
+  setFormData((previousData) => ({
+    ...previousData,
+    [name]: value
+  }))
+
+  setFormErrors((previousErrors) => {
+    const updatedErrors = { ...previousErrors }
+    delete updatedErrors[name]
+
+    if (
+      name === 'postalCode' &&
+      value.trim() &&
+      !/^\d{5}(-\d{4})?$/.test(value.trim())
+    ) {
+      updatedErrors.postalCode =
+        'Enter a valid ZIP code (e.g., 48329).'
+    }
+
+    return updatedErrors
+  })
+}
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -29,10 +46,19 @@ function CheckoutPage({ cart, onCompleteOrder }) {
     const errors = {}
 
     Object.entries(formData).forEach(([field, value]) => {
-      if (!value.trim()) {
+        if (!value.trim()) {
         errors[field] = 'This field is required.'
-      }
+        }
     })
+
+    const postalCodePattern = /^\d{5}(-\d{4})?$/
+
+    if (
+        formData.postalCode.trim() &&
+        !postalCodePattern.test(formData.postalCode.trim())
+    ) {
+        errors.postalCode = 'Enter a valid ZIP code (e.g., 48329).'
+    }
 
     setFormErrors(errors)
 

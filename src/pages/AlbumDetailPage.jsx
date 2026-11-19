@@ -44,9 +44,11 @@ function AlbumDetailPage({ onAddToCart }) {
           </p>
 
           <p className="stock-status">
-            {album.stock > 0
-              ? `${album.stock} copies available`
-              : 'Out of Stock'}
+            {album.stock === 0
+            ? 'Out of Stock'
+            : album.stock <= 3
+                ? `Only ${album.stock} ${album.stock === 1 ? 'copy' : 'copies'} left!`
+                : `${album.stock} copies available`}
           </p>
 
           <button

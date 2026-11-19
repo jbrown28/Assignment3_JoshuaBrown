@@ -1,4 +1,5 @@
 
+import { ALBUMS } from './data/albums'
 import { useState } from 'react'
 import { useNavigate, Routes, Route } from 'react-router-dom'
 
@@ -46,14 +47,24 @@ function App() {
 
   // Increase an item's quantity.
   const handleIncreaseQuantity = (albumId) => {
-    setCart((currentCart) =>
-      currentCart.map((item) =>
-        item.id === albumId && item.quantity < item.stock
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+  setCart((currentCart) =>
+    currentCart.map((item) => {
+      const originalAlbum = ALBUMS.find(
+        (album) => album.id === albumId
       )
-    )
-  }
+
+      if (
+        item.id === albumId &&
+        originalAlbum &&
+        item.quantity < originalAlbum.stock
+      ) {
+        return { ...item, quantity: item.quantity + 1 }
+      }
+
+      return item
+    })
+  )
+}
 
   // Decrease an item's quantity.
   const handleDecreaseQuantity = (albumId) => {
