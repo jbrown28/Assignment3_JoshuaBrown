@@ -1,0 +1,26 @@
+
+import AlbumCard from './AlbumCard'
+
+function AlbumGrid({ albums, onAddToCart }) {
+  if (albums.length === 0) {
+    return (
+      <p className="no-albums">
+        No albums found in this genre.
+      </p>
+    )
+  }
+
+  return (
+    <div className="album-grid">
+      {albums.map((album) => (
+        <AlbumCard
+          key={album.id}
+          album={album}
+          onAddToCart={onAddToCart}
+        />
+      ))}
+    </div>
+  )
+}
+
+export default AlbumGrid

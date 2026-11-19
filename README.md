@@ -1,10 +1,11 @@
 # React + V
 
-# Vinyl Vault — React E-Commerce Storefront
+## Vinyl Vault — React E-Commerce Storefront
 
 ## 1. Project Setup & Execution Instructions
 
 ### Prerequisites
+
 - Node.js v21 or higher
 - npm (Node Package Manager)
 - Git
@@ -221,22 +222,22 @@ Callback Handlers:
 
 ### State Management & Data Flow
 
-**Shared Application State — App.jsx**
+## Shared Application State — App.jsx
 
 The `cart` array and `isCartOpen` Boolean are maintained in the root application component using React's `useState()` hook. This allows the navigation badge, catalog, album detail views, cart drawer, and checkout page to remain synchronized across routes.
 
 All cart modifications use immutable state updates with array mapping, filtering, and spread syntax rather than directly mutating existing state.
 
-**Local Component State**
+## Local Component State
 
 - `CatalogPage.jsx`: Maintains `selectedGenre` to control album filtering.
 - `CheckoutPage.jsx`: Maintains `formData`, `orderConfirmed`, and `formErrors` to manage controlled form inputs, validation, and order confirmation.
 
-**Unidirectional Data Flow**
+## Unidirectional Data Flow
 
 Parent components pass data and callback functions to their children through props. Child components communicate user interactions back to their parents through callback handlers. The root `App.jsx` component manages shared cart updates, ensuring that all routed views reflect the same application state.
 
-**Routing Architecture**
+## Routing Architecture
 
 React Router DOM handles client-side navigation without full-page browser reloads:
 
@@ -246,6 +247,6 @@ React Router DOM handles client-side navigation without full-page browser reload
 
 The application uses React Router's `Link` component for internal navigation.
 
-**Checkout Workflow**
+## Checkout Workflow
 
 The checkout form uses controlled inputs managed through `useState()`. Upon submission, the application prevents the default browser form submission, validates required fields, clears the shared cart after successful validation, and displays an order confirmation.
